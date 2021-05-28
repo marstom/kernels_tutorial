@@ -1,0 +1,1 @@
+- Zbuduj gcc i cross compiler
