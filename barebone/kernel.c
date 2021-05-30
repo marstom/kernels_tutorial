@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <time.h>
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -108,7 +109,14 @@ void kernel_main(void)
 {
 	/* Initialize terminal interface */
 	terminal_initialize();
- 
+	terminal_setcolor(VGA_COLOR_GREEN);
+	
 	/* Newline support is left as an exercise. */
-	terminal_writestring("Hello, kernel World!\n");
+	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
+	delayms(1000);
+	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
+	delayms(1000);
+	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
+	delayms(1000);
+	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
 }

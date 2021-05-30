@@ -6,7 +6,7 @@ baby:
 
 
 # target remote localhost:1234
-run:
+rufn:
 	qemu-system-i386 -s -S -hda boot.bin
 
 run_log:

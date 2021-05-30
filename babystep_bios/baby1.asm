@@ -19,11 +19,23 @@ hang:
    cld
    mov ah, 0x00
    int 0x16
-   cmp al, 0x0D ; enter
-   je ch_loop
+   
+   
+   mov ah, 0x0E
+   int 0x10      ; print out character
+   
+   cmp al, 0x0D ; new_line
+   je new_line
+   
    jmp hang
  
-msg   db 'Hellofs World', 13, 10, 0
+
+new_line:
+   mov al, 0x0A
+   int 0x10		; newline
+   jmp hang
+
+msg   db 'Held', 13, 10, 0
 msg2   db 'New message    ', 13, 10, 0 
    times 510-($-$$) db 0
    db 0x55
