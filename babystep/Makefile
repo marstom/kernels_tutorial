@@ -1,11 +1,18 @@
-real_mode_assembly1:
-	nasm real_mode_assembly1.asm -f bin -o boot.bin
 
-real_mode_assembly2:
-	nasm real_mode_assembly2.asm -f bin -o boot.bin
+all: baby run_log
 
+baby:
+	nasm baby1.asm -f bin -o boot.bin
+
+
+# target remote localhost:1234
 run:
-	qemu-system-i386 -hda boot.bin
+	qemu-system-i386 -s -S -hda boot.bin
 
-runx:
-	qemu-system-x86_64 -hda boot.bin
+run_log:
+	qemu-system-i386 -monitor stdio -hda boot.bin
+clean:
+	rm boot.bin
+
+debug:
+	objcopy -O binary boot.bin 
