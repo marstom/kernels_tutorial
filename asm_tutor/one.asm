@@ -57,9 +57,10 @@ test:
           xor       rdi, rdi                ; exit code 0
           
           syscall      
-
+          ; https://en.wikipedia.org/wiki/Data_segment
           section   .data
 message:  db        "Hello, World", 10      ; note the newline at the end
 
-section .bss
+          ; global varialbles
+          section .bss
 buffer:   resb 64 ; 64 bytes reserve
