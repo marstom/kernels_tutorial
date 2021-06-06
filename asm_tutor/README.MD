@@ -5,6 +5,7 @@ http://faculty.nps.edu/cseagle/assembly/sys_call.html
 
 # Ćwiczenia w asm
 
+## Rejestry!
 http://bogdro.evai.pl/linux/linux01.html - bardzo elegancko opisane rejestry
 http://bogdro.evai.pl/linux/linux04.html - pierwsze programy
 

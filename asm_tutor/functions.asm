@@ -1,6 +1,6 @@
 ;---------------------------------------------
 ;iprint(integer number)
-;
+;printuje wartość z EAX
 iprint:
     push    eax
     push    ecx
@@ -32,7 +32,7 @@ printLoop:
 
 ;---------------------------------------------
 ;iprintLF(integer number)
-;
+;printuje wartość z EAX
 iprintLF:
     call iprint
     push    eax        ; preserve eax
@@ -107,3 +107,48 @@ quit:
     mov     eax, 1
     int     80h
     ret
+
+
+;---------------------------------------------
+;atoi(string strNumber)
+;
+atoi:
+    push ebx
+    push ecx
+    push edx
+    push esi
+
+    mov esi, eax
+    mov eax, 0
+    mov ecx, 0
+
+    ; conversion
+.convertDigit:
+    xor ebx, ebx
+    mov ebx, [esi + ecx]
+    push ebx
+
+    mov eax, ebx
+    mov ecx, 1
+    mul ecx
+    mov ebx, eax
+    
+    and ebx, 0xFF
+    sub ebx, 48
+    mov eax, ebx
+    pop ebx
+.restore:
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+    ret
+
+
+
+
+
+
+;------------------------------
+; My own functions
+;------------------------------
