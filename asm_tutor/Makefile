@@ -3,4 +3,4 @@ clean:
 	rm a.out
 
 %:
-	nasm -f elf $@.asm && ld -m elf_i386 $@.o -o a.out && ./a.out 
+	nasm -g -f elf $@.asm && ld -g -m elf_i386 $@.o -o a.out && ./a.out 

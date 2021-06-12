@@ -27,7 +27,7 @@ WIP/todo implement atoi
 SECTION .data
 msg_sep           db      '-----------', 0
 msg_atoi          db      'Atoi', 0
-ditit_to_convert  db  '53'
+ditit_to_convert  db  '639'
 
 SECTION .text
 global  _start
@@ -42,3 +42,4 @@ _start:
     call iprintLF
 
     call quit
+

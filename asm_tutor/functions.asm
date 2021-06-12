@@ -109,6 +109,7 @@ quit:
     ret
 
 
+
 ;---------------------------------------------
 ;atoi(string strNumber)
 ;
@@ -122,26 +123,33 @@ atoi:
     mov eax, 0
     mov ecx, 0
 
-    ; conversion
-.convertDigit:
-    xor ebx, ebx
-    mov ebx, [esi + ecx]
-    push ebx
 
-    mov eax, ebx
-    mov ecx, 1
-    mul ecx
-    mov ebx, eax
-    
-    and ebx, 0xFF
-    sub ebx, 48
-    mov eax, ebx
-    pop ebx
+.multiplyLoop:
+    xor     ebx, ebx        ;clear ebx
+    mov     bl, [esi + ecx] ; inc exc by byte to conv next number
+    cmp     bl, 48          ; 0 ascii
+    jl      .finished       ; if lower
+    cmp     bl, 57          ; 9 ascii
+    jg      .finished       ; if greater
+
+    sub     bl, 48          ; lower half ebx to decimal repr
+    add     eax, ebx
+    mov     ebx, 10
+    mul     ebx
+    inc     ecx             ; inc counter register
+    jmp     .multiplyLoop
+
+.finished:
+    cmp     ecx, 0
+    je  .restore
+    mov     ebx, 10
+    div     ebx
+
 .restore:
-    pop esi
-    pop edx
-    pop ecx
-    pop ebx
+    pop     esi
+    pop     edx
+    pop     ecx
+    pop     ebx
     ret
 
 
