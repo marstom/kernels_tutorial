@@ -5,16 +5,24 @@ SECTION .text
 ;return rax
 
 add:
-    ; push rbp      ;store stack
-    ; mov rbp, rsp  ;
+    push rbp      ;store stack
+    mov rbp, rsp  ;
+    
+    xor rax, rax
+
+    push rdi
+    push rsi
+    push rdx
+    ; push rdx
+
+    add rax, [rsp+16]   ; 3 2 1
+    add rax, [rsp+8]    ; 6 5 4
+    add rax, [rsp]      ; 9 8 7
 
 
-    add rdi, rsi
-    add rdi, rdx
-    mov rax, rdi
-    ; mov [rbp-4], edi ; use stack
-    ; mov rsp, rbp
-    ; pop rbp  ;resotre stack
+    
+    mov rsp, rbp
+    pop rbp  ;resotre stack
     ret
 
 
