@@ -1,3 +1,4 @@
+;https://godbolt.org/z/vaE5PWx3s
 global  add
 
 SECTION .text
@@ -13,14 +14,11 @@ add:
     push rdi
     push rsi
     push rdx
-    ; push rdx
 
-    add rax, [rsp+16]   ; 3 2 1
-    add rax, [rsp+8]    ; 6 5 4
-    add rax, [rsp]      ; 9 8 7
+    add rax, [rsp+16]   ; 3 2 1      ; stos maleje gdy dodaje ( + 16 to 3ci od końca)
+    add rax, [rsp+8]    ; 6 5 4      ; 2gi od końca
+    add rax, [rsp]      ; 9 8 7      ; pierwszy z góry stosu
 
-
-    
     mov rsp, rbp
     pop rbp  ;resotre stack
     ret
