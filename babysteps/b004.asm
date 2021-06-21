@@ -19,14 +19,9 @@ Also available in unsigned comparisons: jb (<), jbe (<=), ja (>), jae (>=)
 mov ax, 0x07c0
 mov ds, ax
 cld
-;std
-;lodsb
 
 mov ah, 0x0e ;teletype mode
 mov bh, 0
-
-mov sp, 512
-mov bp, 512
 
 ; mov al, 65
 mov si, msg
