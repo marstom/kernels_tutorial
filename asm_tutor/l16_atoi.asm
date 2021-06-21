@@ -16,7 +16,6 @@ EBX -  starsze8=BH, młodsze8=BL
 
 num to convert mov esi, eax (in esi)
 
-WIP/todo implement atoi
 %endif
 
 %include 'functions.asm'

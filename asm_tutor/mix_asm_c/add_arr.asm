@@ -1,4 +1,5 @@
-;https://godbolt.org/z/vaE5PWx3s
+; link do tego co kompilator zrobił
+;https://godbolt.org/z/9fMn3qers
 global  add_arr
 
 SECTION .text

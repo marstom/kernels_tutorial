@@ -1,1 +1,0 @@
-ata0-slave: type=cdrom, path="/home/marstomek/dev/os/babystep/boot.bin", status=inserted
