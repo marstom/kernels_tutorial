@@ -19,7 +19,10 @@ run_log:
 	qemu-system-i386 -monitor stdio -hda boot.bin
 
 clean:
-	rm boot.bin
+	find . -type f -name "*.o" -delete
+	find . -type f -name "*.S" -delete
+	find . -type f -name "*.elf" -delete
+	find . -type f -name "*.bin" -delete
 
 # debugg
 debug:

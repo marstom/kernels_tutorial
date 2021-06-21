@@ -11,7 +11,10 @@ link:
 	i686-elf-gcc -T linker.ld -o myos.bin -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
 
 clean:
-	rm -rf *.o *.bin
+	find . -type f -name "*.o" -delete
+	find . -type f -name "*.S" -delete
+	find . -type f -name "*.elf" -delete
+	find . -type f -name "*.bin" -delete
 
 run:
 	qemu-system-i386 -kernel myos.bin

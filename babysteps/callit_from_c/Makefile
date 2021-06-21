@@ -1,20 +1,21 @@
-all: nasm gcc
+CFLAGS=-std=gnu99 -ffreestanding
+
+
+all: nasm gcc link
 
 nasm:
-	nasm kmain.asm -f bin -o kmain.o
-
-
-CFLAGS=-g -fno-PIE -static -std=gnu99 -m16 -Os -mregparm=3 \
-    -fomit-frame-pointer -nostdlib -ffreestanding -Wall -Wextra
+	nasm -f elf32 boot.asm -o boot.o
 
 gcc:
-	i686-elf-gcc -c $(CFLAGS) os.c kmain.o -o boot.bin
+	i686-elf-gcc -c kernel.c -o kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-ld:
-	i686-elf-ld -melf_i386 -Tlink.ld ./kmain.o ./os.o -o boot.elf
-
+link:
+	i686-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
 run:
-	qemu-system-i386 -hda boot.bin
+	qemu-system-i386 -kernel kernel.bin
 
 clean:
-	rm -rf *.o
+	find . -type f -name "*.o" -delete
+	find . -type f -name "*.S" -delete
+	find . -type f -name "*.elf" -delete
+	find . -type f -name "*.bin" -delete
