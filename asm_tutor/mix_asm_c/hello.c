@@ -15,6 +15,7 @@ int main(){
     int arr[5] ={9,8,7,6,5};
     printf("\n array: %d\n", add_arr(arr, 5));
 
+    // printf("\n Square sum: %d\n", square_sum((int32_t[]){1, 2, 3, 4, 5, 6}, 5));
     printf("\n Square sum: %d\n", square_sum((int32_t[]){3, 5, 5}, 3));
     return 0;
 }
