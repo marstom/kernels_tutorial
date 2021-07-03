@@ -11,36 +11,52 @@ global  square_sum
 SECTION .text
 
 square_sum:
-    ;push    rbp
-    ;mov     rbp, rsp
+    push    rbp
+    push    rdi
+    push    rdx
 
-    mov     QWORD [rbp-8], rdi
-    mov     DWORD [rbp-12], esi
+    mov     rbp, rsp
+    xor rax, rax
 
+    mov [args], esi
     mov esi, 0
-    mov rax, [rbp-12]
-    mov [args], rax
 
     
 .get_array:
-    mov rdx, [rbp-8]
+    mov rdx, rdi
     mov eax, [rdx+4*rsi]   ; +0 +4 +8 get number by index n from array
     mul eax
     add [result], eax      ; variable += eax
+
+    cmp [args], dword 0
+    jz .end
+
     inc esi               ; inc array index
     cmp esi,  [args]
     jne .get_array
 
     mov rax, [result]
 
-    ;pop rbp                ; restore stack
+    pop rdx
+    pop rdi
+    pop rbp
+    xor esi, esi
+    mov [result], dword 0
     ret
 
+.end:
+    mov rax, 0
+    pop rdx
+    pop rdi
+    pop rbp
+    xor esi, esi
+    mov [result], dword 0
+    ret
 
 SECTION .data
-    result: dd 0
-    counter: dd 0
-    args: dd 0
+    result: dq 0
+    counter: dq 0
+    args: dq 0
 
-    arg1: dd 0
-    arg2: dd 0
+    array_ptr: dq 0
+    arr_len: dq 0
