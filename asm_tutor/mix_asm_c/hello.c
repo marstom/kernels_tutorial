@@ -4,6 +4,7 @@
 extern void hello();
 extern int add(char a, char b, char c);
 extern int add_arr(int *a, int size);
+extern int square_sum(int32_t arr[], int32_t len);extern int square_sum(int32_t arr[], int32_t len);
 
 int main(){
     hello();
@@ -13,5 +14,7 @@ int main(){
 
     int arr[5] ={9,8,7,6,5};
     printf("\n array: %d\n", add_arr(arr, 5));
+
+    printf("\n Square sum: %d\n", square_sum((int32_t[]){3, 5, 5}, 3));
     return 0;
 }
