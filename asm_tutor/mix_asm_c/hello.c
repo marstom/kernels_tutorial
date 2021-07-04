@@ -23,9 +23,15 @@ int main(){
     printf("\n Square sumx: %d\n", square_sum((int32_t[]){1}, 1));
 
     //https://www.codewars.com/kata/5513795bd3fafb56c200049e/train/nasm
-    unsigned data[5];
-    unsigned *actual = cntbyx(data, 5, 5);
-    printf("\n KATA cntbyx: %d %d %d %d %d\n", actual[0], actual[1], actual[2], actual[3], actual[4]);
+    unsigned data[10];
+    int32_t len = 10;
+    unsigned *actual = cntbyx(data, 1, len);
+    printf("\n KATA cntbyx:");
+    for(int i = 0; i < 10; i++){
+        printf(" %d", actual[i]);
+    }
+    printf("\n");
+    
 
     return 0;
 }
