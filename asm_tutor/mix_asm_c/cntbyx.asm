@@ -5,11 +5,20 @@ section .text
 
 cntbyx:
     xor r8, r8
+    mov r9d, 2
+    mov ebx, 2
+
 
 .loop:
     cmp r8, rdx
     je .endLoop
-    mov [rdi+4*r8], dword 188
+    xor eax, eax
+    mov eax, esi
+    imul eax, r9d
+    mov eax, eax
+    mov [rdi+4*r8], eax
+    mov eax, 0
+    mov r9d, 2
     inc r8
     jmp .loop
 .endLoop:
