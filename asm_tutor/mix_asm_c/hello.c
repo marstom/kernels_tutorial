@@ -5,6 +5,7 @@ extern void hello();
 extern int add(char a, char b, char c);
 extern int add_arr(int *a, int size);
 extern int square_sum(int32_t arr[], int32_t len);extern int square_sum(int32_t arr[], int32_t len);
+extern char *rgb(int r, int g, int b, char *outp);
 
 extern unsigned *cntbyx(unsigned *outp, unsigned x, size_t n);
 
@@ -25,12 +26,17 @@ int main(){
     //https://www.codewars.com/kata/5513795bd3fafb56c200049e/train/nasm
     unsigned data[10];
     int32_t len = 10;
-    unsigned *actual = cntbyx(data, 1, len);
+    unsigned *actual = cntbyx(data, 5, len);
     printf("\n KATA cntbyx:");
     for(int i = 0; i < 10; i++){
         printf(" %d", actual[i]);
     }
     printf("\n");
+
+    // https://www.codewars.com/kata/513e08acc600c94f01000001/train/nasm
+    char outp[7];
+    rgb(111, 222, 333, outp);
+    printf("Hex RGB %s\n", outp);
     
 
     return 0;
