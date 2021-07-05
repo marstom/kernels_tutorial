@@ -1,3 +1,41 @@
+%macro hex_to_array_on_pos 1
+    cmp dl, 10
+    je %%A
+    cmp dl, 11
+    je %%B
+    cmp dl, 12
+    je %%C
+    cmp dl, 13
+    je %%D
+    cmp dl, 14
+    je %%E
+    cmp dl, 15
+    je %%F
+    add dl, 48
+    mov byte [rcx+%1], dl
+    sub dl, 48
+    jmp %%end
+    %%A:
+    mov byte [rcx+%1],   'A'
+    jmp %%end
+    %%B:
+    mov byte [rcx+%1],   'B'
+    jmp %%end
+    %%C:
+    mov byte [rcx+%1],   'C'
+    jmp %%end
+    %%D:
+    mov byte [rcx+%1],   'D'
+    jmp %%end
+    %%E:
+    mov byte [rcx+%1],   'E'
+    jmp %%end
+    %%F:
+    mov byte [rcx+%1],   'F'
+    jmp %%end
+    %%end:
+%endmacro
+
 global rgb
 
 section .text
@@ -14,27 +52,20 @@ division:
     
 .two_hex_loop:
     div rbx       ; rax / rbx    wynik w rax(al), reszta rdx (dl)
-    add dl, 48
-    mov byte [rcx+1],   dl
-    sub dl, 48
-    ;loop 2 (1)
-    mov rbx, 16
+    hex_to_array_on_pos 1
+    ;mov rbx, 16
     div rbx 
-    add dl, 48
-    mov byte [rcx],   dl
+    hex_to_array_on_pos 0
 
-    ; conv to digit
-    add al, 48
-    add dl, 48
 
     ; mov byte [rcx],   dl
     ; mov byte [rcx+1], 'e'
 
-    mov byte [rcx+2], 'l'
-    mov byte [rcx+3], 'l'
+    mov byte [rcx+2], ' '
+    mov byte [rcx+3], ' '
     
-    mov byte [rcx+4], 'o'
-    mov byte [rcx+4], 'x'
+    mov byte [rcx+4], ' '
+    mov byte [rcx+4], ' '
 
     mov rax, rcx
     ; rax <- outp

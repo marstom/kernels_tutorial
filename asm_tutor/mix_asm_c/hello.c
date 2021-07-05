@@ -36,7 +36,7 @@ int main(){
     // https://www.codewars.com/kata/513e08acc600c94f01000001/train/nasm
     char outp[7];
     // rgb(18, 222, 333, outp);
-    rgb(31, 222, 333, outp);
+    rgb(255, 0, 0, outp);
     printf("Hex RGB %s\n", outp);
     
 
