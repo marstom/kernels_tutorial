@@ -42,8 +42,12 @@ section .text
 ;                 edi     esi    edx        rcx
 ; <----- int rgb(int r, int g, int b, char *outp) ----->
 rgb:
-
+    push rbp
+    mov  rbp, rsp
     mov dword [rbp-4], edi
+    mov dword [rbp-8], esi
+    mov dword [rbp-12], edx
+
 
 red:
     xor rax, rax
@@ -58,7 +62,7 @@ red:
 
 green:
     xor rax, rax
-    mov rax, rsi
+    mov rax, qword [rbp-8]
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -69,7 +73,7 @@ green:
 
 blue:
     xor rax, rax
-    mov rax, rdx ; rdx has wrong value
+    mov rax, qword [rbp-12] ; rdx has wrong value
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -80,8 +84,7 @@ blue:
 
 
     mov rax, rcx
-    ; rax <- outp
-    ; pop rbp
+    pop rbp
     ret
 ; ---------> end of rgb <---------
 
