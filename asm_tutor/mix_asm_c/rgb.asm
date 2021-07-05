@@ -43,29 +43,41 @@ section .text
 ; <----- int rgb(int r, int g, int b, char *outp) ----->
 rgb:
 
-division:
+    mov dword [rbp-4], edi
+
+red:
     xor rax, rax
+    mov rax, qword [rbp-4]
     xor rdx, rdx
-    mov rax, rdi
-    ; loop1 (2)
+    xor rbx, rbx
     mov rbx, 16
-    
-.two_hex_loop:
-    div rbx       ; rax / rbx    wynik w rax(al), reszta rdx (dl)
+    div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
     hex_to_array_on_pos 1
-    ;mov rbx, 16
     div rbx 
     hex_to_array_on_pos 0
 
+green:
+    xor rax, rax
+    mov rax, rsi
+    xor rdx, rdx
+    xor rbx, rbx
+    mov rbx, 16
+    div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
+    hex_to_array_on_pos 3
+    div rbx 
+    hex_to_array_on_pos 2
 
-    ; mov byte [rcx],   dl
-    ; mov byte [rcx+1], 'e'
+blue:
+    xor rax, rax
+    mov rax, rdx ; rdx has wrong value
+    xor rdx, rdx
+    xor rbx, rbx
+    mov rbx, 16
+    div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
+    hex_to_array_on_pos 5
+    div rbx 
+    hex_to_array_on_pos 4
 
-    mov byte [rcx+2], ' '
-    mov byte [rcx+3], ' '
-    
-    mov byte [rcx+4], ' '
-    mov byte [rcx+4], ' '
 
     mov rax, rcx
     ; rax <- outp
