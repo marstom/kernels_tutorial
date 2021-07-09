@@ -1,3 +1,8 @@
+;;
+;Cheat sheet
+;https://www.cs.tufts.edu/comp/40/docs/x64_cheatsheet.pdf
+; Value is cheted!
+
 %macro hex_to_array_on_pos 1
     cmp dl, 10
     je %%A
@@ -42,16 +47,20 @@ section .text
 ;                 edi     esi    edx        rcx
 ; <----- int rgb(int r, int g, int b, char *outp) ----->
 rgb:
-    push rbp
-    mov  rbp, rsp
-    mov dword [rbp-4], edi
-    mov dword [rbp-8], esi
-    mov dword [rbp-12], edx
+    ;push rbp
+    ;mov  rbp, rsp
+    push rdx
+    push rsi
+    push rdi
+    ; mov dword [rbp-4], edi
+    ; mov dword [rbp-8], esi
+    ; mov dword [rbp-12], edx
 
 
 red:
     xor rax, rax
-    mov rax, qword [rbp-4]
+    ; mov rax, qword [rbp-4]
+    pop rax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -62,7 +71,8 @@ red:
 
 green:
     xor rax, rax
-    mov rax, qword [rbp-8]
+    ; mov rax, qword [rbp-8]
+    pop rax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -73,7 +83,8 @@ green:
 
 blue:
     xor rax, rax
-    mov rax, qword [rbp-12] ; rdx has wrong value
+    ; mov rax, qword [rbp-12] ; rdx has wrong value
+    pop rax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -84,7 +95,7 @@ blue:
 
 
     mov rax, rcx
-    pop rbp
+    ;pop rbp
     ret
 ; ---------> end of rgb <---------
 

@@ -15,16 +15,14 @@
  
    mov si, msg   ; show text string
    call sprint
-   ret
  
-   ; print hexa
-   ; mov ax, 0xb800   ; look at video mem
-   ; mov gs, ax
-   ; mov bx, 0x0000   ; 'W'=57 attrib=0F
-   ; mov ax, [gs:bx]
+   mov ax, 0xb800   ; look at video mem
+   mov gs, ax
+   mov bx, 0x0000   ; 'W'=57 attrib=0F
+   mov ax, [gs:bx]
  
-   ; mov  word [reg16], ax ;look at register
-   ; call printreg16
+   mov  word [reg16], ax ;look at register
+   call printreg16
  
 hang:
    jmp hang
@@ -34,17 +32,19 @@ dochar:   call cprint         ; print one character
 sprint:   lodsb      ; string char to AL
    cmp al, 0
    jne dochar   ; else, we're done
-   ;add byte [ypos], 1   ;down one row
-   ;mov byte [xpos], 0   ;back to left
+   add byte [ypos], 1   ;down one row
+   mov byte [xpos], 0   ;back to left
    ret
  
-cprint:   mov ah, 0x1D   ; attrib = white on black
+cprint:   mov ah, 0x2F   ; attrib = white on black
    mov cx, ax    ; save char/attribute
    movzx ax, byte [ypos]
    mov dx, 160   ; 2 bytes (char/attrib)
-   mul dx      ; for 80 columns
+   mul d  x      ; for 80 columns
    movzx bx, byte [xpos]
-   shl bx, 1    ; times 2 to skip attrib
+   shl b   0,
+   
+   x, 1    ; times 2 to skip attrib
  
    mov di, 0        ; start of video memory
    add di, ax      ; add y offset

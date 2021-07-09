@@ -51,5 +51,9 @@ int main(){
     printf("Hex RGB %s\n", outp);
     rgb(255, 255, 255, outp);
     printf("Hex RGB %s\n", outp); 
+    rgb(NULL, NULL, NULL, outp);
+    printf("Hex RGB %s\n", outp); 
+    rgb(257, 0, 255, outp);
+    printf("Hex RGB %s\n", outp); 
     return 0;
 }
