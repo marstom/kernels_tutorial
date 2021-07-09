@@ -6,8 +6,8 @@ extern int add(char a, char b, char c);
 extern int add_arr(int *a, int size);
 extern int square_sum(int32_t arr[], int32_t len);extern int square_sum(int32_t arr[], int32_t len);
 extern char *rgb(int r, int g, int b, char *outp);
-
 extern unsigned *cntbyx(unsigned *outp, unsigned x, size_t n);
+extern int get_real_floor(int floor);
 
 int main(){
     hello();
@@ -55,5 +55,9 @@ int main(){
     printf("Hex RGB %s\n", outp); 
     rgb(257, 0, 255, outp);
     printf("Hex RGB %s\n", outp); 
+    printf("Floor(1) %d\n", get_real_floor(1)); 
+    printf("Floor(5) %d\n", get_real_floor(5)); 
+    printf("Floor(15) %d\n", get_real_floor(15)); 
+    printf("Floor(15) %d\n", get_real_floor(-3)); 
     return 0;
 }
