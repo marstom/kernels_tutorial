@@ -3,103 +3,107 @@
 ;https://www.cs.tufts.edu/comp/40/docs/x64_cheatsheet.pdf
 ; Value is cheted!
 
-%macro hex_to_array_on_pos 1
-    cmp dl, 10
-    je %%A
-    cmp dl, 11
-    je %%B
-    cmp dl, 12
-    je %%C
-    cmp dl, 13
-    je %%D
-    cmp dl, 14
-    je %%E
-    cmp dl, 15
-    je %%F
-    add dl, 48
-    mov byte [rcx+%1], dl
-    sub dl, 48
-    jmp %%end
-    %%A:
-    mov byte [rcx+%1],   'A'
-    jmp %%end
-    %%B:
-    mov byte [rcx+%1],   'B'
-    jmp %%end
-    %%C:
-    mov byte [rcx+%1],   'C'
-    jmp %%end
-    %%D:
-    mov byte [rcx+%1],   'D'
-    jmp %%end
-    %%E:
-    mov byte [rcx+%1],   'E'
-    jmp %%end
-    %%F:
-    mov byte [rcx+%1],   'F'
-    jmp %%end
-    %%end:
-%endmacro
-
 global rgb
-
 section .text
 ;                 edi     esi    edx        rcx
 ; <----- int rgb(int r, int g, int b, char *outp) ----->
 rgb:
     ;push rbp
     ;mov  rbp, rsp
+    sub rsp, 80
+    push rbx
     push rdx
     push rsi
     push rdi
-    ; mov dword [rbp-4], edi
-    ; mov dword [rbp-8], esi
-    ; mov dword [rbp-12], edx
+
+    ; mov dword [rsp + 4], edi
+    ; mov dword [rsp + 8], esi
+    ; mov dword [rsp + 12], edx
+
 
 
 red:
-    xor rax, rax
-    ; mov rax, qword [rbp-4]
     pop rax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
     div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
-    hex_to_array_on_pos 1
-    div rbx 
-    hex_to_array_on_pos 0
+    mov r10, 1
+    call hex_to_array_on_r10_position
+    div rbx
+    mov r10, 0
+    call hex_to_array_on_r10_position
+
 
 green:
-    xor rax, rax
-    ; mov rax, qword [rbp-8]
     pop rax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
     div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
-    hex_to_array_on_pos 3
+    mov r10, 3
+    call hex_to_array_on_r10_position
     div rbx 
-    hex_to_array_on_pos 2
+    mov r10, 2
+    call hex_to_array_on_r10_position
+
 
 blue:
-    xor rax, rax
-    ; mov rax, qword [rbp-12] ; rdx has wrong value
     pop rax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
     div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
-    hex_to_array_on_pos 5
+    mov r10, 5
+    call hex_to_array_on_r10_position
     div rbx 
-    hex_to_array_on_pos 4
-
+    mov r10, 4
+    call hex_to_array_on_r10_position
 
     mov rax, rcx
-    ;pop rbp
+    pop rbx
+    add rsp, 80
     ret
 ; ---------> end of rgb <---------
 
 
 
 
-
+; shift in r10
+hex_to_array_on_r10_position:
+    cmp dl, 10
+    je .A
+    cmp dl, 11
+    je .B
+    cmp dl, 12
+    je .C
+    cmp dl, 13
+    je .D
+    cmp dl, 14
+    je .E
+    cmp dl, 15
+    je .F
+    add dl, 48
+    mov byte [rcx+r10], dl
+    sub dl, 48
+    jmp .end
+    .A:
+    mov byte [rcx+r10],   'A'
+    jmp .end
+    .B:
+    mov byte [rcx+r10],   'B'
+    jmp .end
+    .C:
+    mov byte [rcx+r10],   'C'
+    jmp .end
+    .D:
+    mov byte [rcx+r10],   'D'
+    jmp .end
+    .E:
+    mov byte [rcx+r10],   'E'
+    jmp .end
+    .F:
+    mov byte [rcx+r10],   'F'
+    jmp .end
+    .end:
+    ret

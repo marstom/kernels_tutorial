@@ -1,10 +1,10 @@
+OUT=test.out
 
 SRCS=$(wildcard *.asm)
-
 FILENAMES=$(SRCS:.asm=)
 OBJS=$(SRCS:.asm=.o)
 
-all: assembly compile run
+all: assembly compile run clean
 
 assembly:
 	for obj in $(FILENAMES); do \
@@ -12,11 +12,13 @@ assembly:
 	done
 
 compile: $(OBJS)
-	gcc -g hello.c $^ -o a.out
+	gcc -g hello.c $^ -o $(OUT)
 
 run:
-	./a.out
+	./$(OUT)
 
 clean:
 	rm -rf *.o
-	rm a.out
+
+clean_exec:
+	rm $(OUT)
