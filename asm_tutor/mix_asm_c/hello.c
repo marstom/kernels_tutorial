@@ -55,6 +55,8 @@ int main(){
     printf("Hex RGB %s\n", outp); 
     rgb(257, 0, 255, outp);
     printf("Hex RGB %s\n", outp); 
+    rgb(-25, -125, -255, outp);
+    printf("Hex RGB NEGATIVE %s\n", outp); 
     printf("Floor(1) %d\n", get_real_floor(1)); 
     printf("Floor(5) %d\n", get_real_floor(5)); 
     printf("Floor(15) %d\n", get_real_floor(15)); 

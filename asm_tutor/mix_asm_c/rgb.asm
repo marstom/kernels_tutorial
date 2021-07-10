@@ -2,6 +2,8 @@
 ;Cheat sheet
 ;https://www.cs.tufts.edu/comp/40/docs/x64_cheatsheet.pdf
 ; Value is cheted!
+;https://www.codewars.com/kata/513e08acc600c94f01000001/solutions/nasm
+
 
 global rgb
 section .text
@@ -18,6 +20,7 @@ rgb:
 red:
 
     mov eax, dword [rsp + 4]
+    mov r11d, eax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -32,12 +35,13 @@ red:
 green:
 
     mov eax, dword [rsp + 8]
+    mov r11d, eax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
     div rbx       ; rax / rbx    result in rax(al), remaining in rdx (dl)
     mov r10, 3
-    call hex_to_array_on_r10_position
+    call hex_to_array_on_r10_position ; r10 - position index, r11d; eax value, to check if is negative
     div rbx 
     mov r10, 2
     call hex_to_array_on_r10_position
@@ -45,6 +49,7 @@ green:
 
 blue:
     mov eax, dword [rsp + 12]
+    mov r11d, eax
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -55,6 +60,7 @@ blue:
     mov r10, 4
     call hex_to_array_on_r10_position
 
+    mov [rcx + 6], byte 0
     mov rax, rcx
     pop rbx
     add rsp, 80
@@ -66,6 +72,12 @@ blue:
 
 ; shift in r10
 hex_to_array_on_r10_position:
+    cmp r11d, 0
+    jl .zero
+
+    cmp r11d, 255
+    jge .F
+
     cmp dl, 10
     je .A
     cmp dl, 11
@@ -99,6 +111,9 @@ hex_to_array_on_r10_position:
     jmp .end
     .F:
     mov byte [rcx+r10],   'F'
+    jmp .end
+    .zero:
+    mov byte [rcx+r10],   '0'
     jmp .end
     .end:
     ret
