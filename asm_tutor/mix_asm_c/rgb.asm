@@ -8,22 +8,16 @@ section .text
 ;                 edi     esi    edx        rcx
 ; <----- int rgb(int r, int g, int b, char *outp) ----->
 rgb:
-    ;push rbp
-    ;mov  rbp, rsp
     sub rsp, 80
     push rbx
-    push rdx
-    push rsi
-    push rdi
 
-    ; mov dword [rsp + 4], edi
-    ; mov dword [rsp + 8], esi
-    ; mov dword [rsp + 12], edx
-
-
+    mov dword [rsp + 4], edi
+    mov dword [rsp + 8], esi
+    mov dword [rsp + 12], edx
 
 red:
-    pop rax
+
+    mov eax, dword [rsp + 4]
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -36,7 +30,8 @@ red:
 
 
 green:
-    pop rax
+
+    mov eax, dword [rsp + 8]
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
@@ -49,7 +44,7 @@ green:
 
 
 blue:
-    pop rax
+    mov eax, dword [rsp + 12]
     xor rdx, rdx
     xor rbx, rbx
     mov rbx, 16
