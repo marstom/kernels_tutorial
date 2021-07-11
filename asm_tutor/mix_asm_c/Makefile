@@ -8,11 +8,11 @@ all: assembly compile run clean
 
 assembly:
 	for obj in $(FILENAMES); do \
-		nasm -f elf64 $$obj.asm -o $$obj.o; \
+		nasm -f elf64 -g $$obj.asm -o $$obj.o; \
 	done
 
 compile: $(OBJS)
-	gcc -g hello.c $^ -o $(OUT)
+	gcc -g test.c $^ -o $(OUT)
 
 run:
 	./$(OUT)

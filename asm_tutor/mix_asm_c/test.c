@@ -8,8 +8,9 @@ extern int square_sum(int32_t arr[], int32_t len);extern int square_sum(int32_t 
 extern char *rgb(int r, int g, int b, char *outp);
 extern unsigned *cntbyx(unsigned *outp, unsigned x, size_t n);
 extern int get_real_floor(int floor);
+extern int last_digit(long); // TODO WIP
 
-int main(){
+void test_old_katas(){
     hello();
     printf("\n addddition: %d\n", add(3,6,9));
     printf("\n addddition: %d\n", add(2,5,8));
@@ -61,5 +62,18 @@ int main(){
     printf("Floor(5) %d\n", get_real_floor(5)); 
     printf("Floor(15) %d\n", get_real_floor(15)); 
     printf("Floor(15) %d\n", get_real_floor(-3)); 
+}
+
+
+void test_last_digit(){
+    printf("Last int last_digit(long); 5->2 %d\n", last_digit(5));
+    printf("Last int last_digit(long); 9->8 %d\n", last_digit(9));
+    printf("Last int last_digit(long); 12->6 %d\n", last_digit(12));
+    printf("Last int last_digit(long); 13->8 %d\n", last_digit(13));
+}
+
+int main(){
+    // test_old_katas();
+    test_last_digit();
     return 0;
 }
