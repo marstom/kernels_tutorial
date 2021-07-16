@@ -5,9 +5,9 @@ section .text
 
 
 main:
-    mov rdi, msg
-    call puts
-    mov rax, 0      ; return 0
+    mov     rdi, msg
+    call    puts
+    mov     rax, 0      ; return 0
     ret
 
 
