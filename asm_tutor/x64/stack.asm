@@ -77,35 +77,28 @@ fill_array:
     mov rdx, 0   ;counter
     mov rcx, 0   ;columns counter
 .printloop:
-    lea r9, [a2d_array+rdx]
-    
-    ; save before call putchar
-    push rdi
-    push r9
-    push rdx
+    lea r9, [a2d_array+rdx] ; a2d_array[rdx]
+    mov  rdi, [r9]          ;value from rdi dereferenxe
+
+    push rdx         ;putchar messed it up ;( 
     push rcx         ;putchar messed up this register again!
-    mov  rdi, [r9]   ;value from rdi dereferenxe
     call putchar
     pop rcx
     pop rdx
-    pop r9
-    pop rdi
-    
+
     inc rcx
-    cmp rcx, 20
+    cmp rcx, 20     ; if(array element > 20) putchar("ENTER")
     jl .continue
     push rdi
     mov rdi, 0x0a
     
-    push rdi
-    push r9
     push rdx
     push rcx
     call putchar
     pop rcx
     pop rdx
-    pop r9
-    pop rdi
+
+
     
     mov rcx, 0
     pop rdi
