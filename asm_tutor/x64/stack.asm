@@ -7,18 +7,24 @@ DD - Define double word. Generally 4 bytes on a typical x86 32-bit system
 r9 nie może być w cmp z jakiegoś powodu nie działa
 
 https://www.tutorialspoint.com/assembly_programming/assembly_conditions.htm
+
+
+Quick cheatsheet
+https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
 %endif 
 global main
 extern printf
+extern putchar
 
 section .text
 
 main:
-    call print_separator
-    call test_drukuj_tablice
-    call print_separator
-    call test_divide
-    call print_separator
+    call put_chars
+    ; call print_separator
+    ; call test_drukuj_tablice
+    ; call print_separator
+    ; call test_divide
+    ; call print_separator
     mov     rax, 0      ; return 0
     ret
 
@@ -54,6 +60,24 @@ test_divide:
 
 
 ;-----------functions--------------
+
+put_chars:
+    mov rdi, '*'
+    call putchar
+
+    mov rdi, '*'
+    call putchar
+
+    mov rdi, '*'
+    call putchar
+
+    mov rdi, 0x0a
+    call putchar
+
+    mov rdi, 0
+    call putchar
+
+    ret
 
 print_separator:
     mov  rdi, .separator
@@ -110,3 +134,6 @@ drukuj_tablice: ; rdi  adres, rsi rozmiar
 
 section .data
 tablica: dd 11, 22, 33, 44, 55, 66, 0 ; I can modify this data, it's read/write initialized memory dd=dword 32bit integer
+
+section .bss
+a2d_array: resb 20*30
