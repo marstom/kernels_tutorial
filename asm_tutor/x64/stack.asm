@@ -16,7 +16,9 @@ global main
 extern printf
 extern putchar
 
+
 section .text
+
 
 main:
     call fill_array
@@ -28,6 +30,7 @@ main:
     mov     rax, 0      ; return 0
     ret
 
+%include 'utils.inc'
 
 ;-------------------tests-------------------
 
@@ -80,11 +83,8 @@ fill_array:
     lea r9, [a2d_array+rdx] ; a2d_array[rdx]
     mov  rdi, [r9]          ;value from rdi dereferenxe
 
-    push rdx         ;putchar messed it up ;( 
-    push rcx         ;putchar messed up this register again!
-    call putchar
-    pop rcx
-    pop rdx
+    call safe_putchar
+
 
     inc rcx
     cmp rcx, 20     ; if(array element > 20) putchar("ENTER")
@@ -92,11 +92,8 @@ fill_array:
     push rdi
     mov rdi, 0x0a
     
-    push rdx
-    push rcx
-    call putchar
-    pop rcx
-    pop rdx
+    call safe_putchar
+
 
 
     
@@ -195,6 +192,8 @@ drukuj_tablice: ; rdi  adres, rsi rozmiar
     pop rsi
     ret
 .format: db "element[%d]->%d", 0x0a, 0
+
+
 
 section .data
 tablica: dd 11, 22, 33, 44, 55, 66, 0 ; I can modify this data, it's read/write initialized memory dd=dword 32bit integer
