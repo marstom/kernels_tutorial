@@ -52,13 +52,13 @@ drukuj_tablice: ; rdi  adres, rsi rozmiar
     cmp     rbx,  rsi
     add     rbx, 1
     jl      .cont
-    mov     dword [rdi+8], 77777   ; access element 3rd of array and write 7777
+    mov     dword [rdi+2*4], 77777   ; access element 3rd [2] of array and write 7777
     push    rdi
     push    rsi
     mov     rdi, msg    ; set 1st parameter (format)
-    mov     rsi, [tablica+4*(rbx-1)]  ; set 2nd parameter
-    lea     r9, [tablica+4*1]
-    mov     dword [r9], 999 ; modify second .data element
+    ; mov     rsi, [tablica+4*(rbx-1)]  ; set 2nd parameter
+    lea     r9, [tablica+4*(rbx-1)]     ; copy effective address to r9
+    mov     rsi, [r9]                   ; get value from address under r9
     ;lea     r9, [tablica+4*rsi]
     xor     rax, rax    ; because printf is varargs
     call    printf
