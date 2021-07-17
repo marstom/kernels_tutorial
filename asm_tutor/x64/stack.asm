@@ -14,9 +14,11 @@ extern printf
 section .text
 
 main:
+    call print_separator
     call test_drukuj_tablice
     call print_separator
     call test_divide
+    call print_separator
     mov     rax, 0      ; return 0
     ret
 
@@ -25,7 +27,7 @@ main:
 
 test_drukuj_tablice:
     lea rdi, [tablica]
-    mov rsi, 5
+    mov rsi, 6
     call drukuj_tablice
     mov     rax, 0      ; return 0
     ret
@@ -83,28 +85,28 @@ drukuj_tablice: ; rdi  adres, rsi rozmiar
     
 .loop:
     cmp     rbx,  rsi
-    pushf   ; push flags on stack, bacause printf mess up my flags
+    ; pushf   ; push flags on stack, bacause printf mess up my flags
     add     rbx, 1
     jl      .cont                       ; continue when
     mov     dword [rdi+2*4], 77777      ; access element 3rd [2] of array and write 7777
     push    rdi
     push    rsi
-    mov     rdi, msg                    ; set 1st parameter (format)
+    mov     rdi, .format                    ; set 1st parameter (format)
     lea     r9, [tablica+4*(rbx-1)]     ; copy effective address to r9
-    mov     rsi, [r9]                   ; get value from address under r9
+    mov     rdx, [r9]                   ; get value from address under r9, printf 2nd vaarg array value
+    mov     rsi, rbx                    ; printf 1st vaarg index
     xor     rax, rax                    ; because printf is varargs
     call    printf
     pop     rsi
     pop     rdi
-    popf    ; to avoid cmp again I pushed flags
-    ; cmp rbx, rsi
+    ; popf    ; to avoid cmp again I pushed flags
+    cmp rbx, rsi
     jle     .loop
 .cont:
     pop rbx
     pop rsi
     ret
+.format: db "element[%d]->%d", 0x0a, 0
 
 section .data
-msg: db "Hello %d", 0x0a, 0
-napis: db "Napis", 0
-tablica: dd 11, 28, 21, 24, 55, 66, 0
+tablica: dd 11, 22, 33, 44, 55, 66, 0 ; I can modify this data, it's read/write initialized memory dd=dword 32bit integer

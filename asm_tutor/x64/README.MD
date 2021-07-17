@@ -18,3 +18,14 @@ b stack.asm:64
 
 Pokaż flagi które są ustawione
 info registers eflags
+
+
+# Funkcje C
+
+printf
+
+format rdi
+arg1 - rsi
+arg2 - rdx
+arg3 - rcx
+
