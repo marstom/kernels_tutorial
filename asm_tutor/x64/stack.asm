@@ -13,20 +13,53 @@ extern printf
 
 section .text
 
-
 main:
-    lea rdi, [tablica]
-    mov rsi, 5
-    ; call divide
-    call drukuj_tablice
-
-    ; mov     rdi, msg    ; set 1st parameter (format)
-    ; mov     rsi, rax  ; set 2nd parameter
-    ; xor     rax, rax    ; because printf is varargs
-    ; call    printf
+    call test_drukuj_tablice
+    call print_separator
+    call test_divide
     mov     rax, 0      ; return 0
     ret
 
+
+;-------------------tests-------------------
+
+test_drukuj_tablice:
+    lea rdi, [tablica]
+    mov rsi, 5
+    call drukuj_tablice
+    mov     rax, 0      ; return 0
+    ret
+
+test_divide:
+    mov rdi, 72
+    mov rsi, 5
+    call divide
+
+    push rdx         ;printf modyfikuje rdx hmm... głupi
+    mov  rdi, .wynik
+    mov  rsi, rax
+    xor rax, rax
+    call printf
+    pop rdx
+
+    mov  rdi, .reszta
+    mov  rsi, rdx
+    xor rax, rax
+    call printf
+    ret
+    .wynik: db "wynik %d", 0x0a, 0 
+    .reszta: db "reszta %d", 0x0a, 0 
+
+
+;-----------functions--------------
+
+print_separator:
+    mov  rdi, .separator
+    ; mov  rsi, 0 ;no second argument
+    xor rax, rax
+    call printf
+    ret
+    .separator: db "-------------------------", 0x0a, 0 
 
 multiply: ;rdi * rsi, result rax
     push rdi
