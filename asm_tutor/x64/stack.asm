@@ -19,7 +19,7 @@ extern putchar
 section .text
 
 main:
-    call put_chars
+    call fill_array
     ; call print_separator
     ; call test_drukuj_tablice
     ; call print_separator
@@ -60,6 +60,77 @@ test_divide:
 
 
 ;-----------functions--------------
+
+fill_array:
+    push rbx
+    mov rbx, 0 ; counter
+
+.loop:
+    lea r9, [a2d_array+rbx]
+    mov byte [r9], byte '+'
+    inc rbx
+    cmp rbx, 20*30
+    jge .endloop
+    jmp .loop
+.endloop:
+
+    mov rdx, 0   ;counter
+    mov rcx, 0   ;columns counter
+.printloop:
+    lea r9, [a2d_array+rdx]
+    
+    ; save before call putchar
+    push rdi
+    push r9
+    push rdx
+    push rcx         ;putchar messed up this register again!
+    mov  rdi, [r9]   ;value from rdi dereferenxe
+    call putchar
+    pop rcx
+    pop rdx
+    pop r9
+    pop rdi
+    
+    inc rcx
+    cmp rcx, 20
+    jl .continue
+    push rdi
+    mov rdi, 0x0a
+    
+    push rdi
+    push r9
+    push rdx
+    push rcx
+    call putchar
+    pop rcx
+    pop rdx
+    pop r9
+    pop rdi
+    
+    mov rcx, 0
+    pop rdi
+.continue:
+    inc rdx
+    cmp rdx, 20*30 ;should be
+    jge .end_printloop
+    jmp .printloop
+.end_printloop:
+    mov rdi, '*'
+    call putchar
+
+    mov rdi, '*'
+    call putchar
+
+    mov rdi, '*'
+    call putchar
+
+    mov rdi, 0x0a
+    call putchar
+
+    mov rdi, 0
+    call putchar
+    pop rbx
+    ret
 
 put_chars:
     mov rdi, '*'
