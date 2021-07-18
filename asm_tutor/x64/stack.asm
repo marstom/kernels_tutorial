@@ -22,6 +22,7 @@ section .text
 
 main:
     call fill_array
+    ; call test_syscall_print
     ; call print_separator
     ; call test_drukuj_tablice
     ; call print_separator
@@ -33,6 +34,11 @@ main:
 %include 'utils.inc'
 
 ;-------------------tests-------------------
+
+test_syscall_print:
+    mov rsi, msg
+    call syscall_print
+    ret
 
 test_drukuj_tablice:
     lea rdi, [tablica]
@@ -138,6 +144,21 @@ put_chars:
 
     ret
 
+
+syscall_print: ; rsi - pointer to message to write
+    push rdi
+    push rax
+    push rdx
+    mov rdi, 1 ; stdout
+    mov rax, 1 ; sys_write x86 4 64bit 1
+    mov rdx, 10; number of bytes to write
+    ; int 0x80   ; call kernel
+    syscall
+    pop rdx
+    pop rax
+    pop rdi
+    ret
+
 print_separator:
     mov  rdi, .separator
     ; mov  rsi, 0 ;no second argument
@@ -195,6 +216,7 @@ drukuj_tablice: ; rdi  adres, rsi rozmiar
 
 section .data
 tablica: dd 11, 22, 33, 44, 55, 66, 0 ; I can modify this data, it's read/write initialized memory dd=dword 32bit integer
+msg: db "tosdceac", 0x0a, 0
 
 section .bss
 a2d_array: resb 20*30
