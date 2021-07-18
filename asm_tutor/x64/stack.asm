@@ -67,36 +67,34 @@ test_divide:
 fill_array:
     push rbx
     mov rbx, 0 ; counter
-
+    mov rax, '0'
 .loop:
     lea r9, [a2d_array+rbx]
-    mov byte [r9], byte '+'
+.sequence: ; fill ax from '0' to 'Z' letters
+    add rax, 1
+    cmp rax, 'Z'
+    jne .end_sequence
+.reset:
+    mov rax, '0'
+.end_sequence:
+    mov [r9], byte rax
     inc rbx
     cmp rbx, 20*30
     jge .endloop
     jmp .loop
 .endloop:
-
     mov rdx, 0   ;counter
     mov rcx, 0   ;columns counter
 .printloop:
     lea r9, [a2d_array+rdx] ; a2d_array[rdx]
     mov  rdi, [r9]          ;value from rdi dereferenxe
-
     call safe_putchar
-
-
     inc rcx
     cmp rcx, 20     ; if(array element > 20) putchar("ENTER")
     jl .continue
     push rdi
     mov rdi, 0x0a
-    
     call safe_putchar
-
-
-
-    
     mov rcx, 0
     pop rdi
 .continue:
