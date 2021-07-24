@@ -8,7 +8,7 @@ all: assembly compile run clean
 
 assembly:
 	for obj in $(FILENAMES); do \
-		nasm -f elf64 -g $$obj.asm -o $$obj.o; \
+		nasm -f elf64 -g -F dwarf $$obj.asm -o $$obj.o; \
 	done
 
 compile: $(OBJS)

@@ -10,7 +10,7 @@ extern unsigned *cntbyx(unsigned *outp, unsigned x, size_t n);
 extern int get_real_floor(int floor);
 extern int last_digit(long); // TODO WIP
 extern int64_t recursion_factorial(int64_t n);
-
+extern int32_t find_it(int32_t* arr, size_t len);
 
 void test_old_katas(){
     hello();
@@ -75,13 +75,18 @@ void test_last_digit(){ // TODO WIP
 }
 
 void test_recursion(){
-    
     printf("Recursion 5! = %lu\n", recursion_factorial(19));
+}
+
+void test_find_it(){
+    int32_t result = find_it((int32_t []){ 20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5 }, 17);
+    printf("Findit { 20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5 }, expected 17 res= %d\n", result);
 }
 
 int main(){
     // test_old_katas();
     // test_last_digit();
-    test_recursion();
+    // test_recursion();
+    test_find_it();
     return 0;
 }
