@@ -52,17 +52,15 @@ find_it:
     
     pop rcx
     pop rdx
-    jne .return_counter
+    jne .return_element_with_odd_counter
     
 ;-------------
 
     inc r9
     cmp r9, rsi
     jne .main_loop
-.return_counter:
-    ;mov rax, r11
-    ; r9 to i 
-    mov rax, [rdi+r9*4]
+.return_element_with_odd_counter:
+    mov rax, [rdi+r9*4] ; arr[i]
     ret
 
 
