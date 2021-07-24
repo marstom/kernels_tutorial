@@ -1,6 +1,5 @@
 ; esi - x = 50value
 ; rdx - n = number of multiplers (the same ar array size) 5
-
 global cntbyx
 
 section .text

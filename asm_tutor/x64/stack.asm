@@ -11,6 +11,10 @@ https://www.tutorialspoint.com/assembly_programming/assembly_conditions.htm
 
 Quick cheatsheet
 https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
+
+
+Syscalls
+http://bogdro.evai.pl/linux/przer80h_1.html
 %endif 
 global main
 extern printf
