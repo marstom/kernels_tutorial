@@ -12,6 +12,10 @@ extern int last_digit(long); // TODO WIP
 extern int64_t recursion_factorial(int64_t n);
 extern int32_t find_it(int32_t* arr, size_t len);
 
+// defined in mutual_recursion.asm
+extern int32_t F(int32_t n);
+extern int32_t M(int32_t n);
+
 void test_old_katas(){
     hello();
     printf("\n addddition: %d\n", add(3,6,9));
@@ -83,10 +87,16 @@ void test_find_it(){
     printf("Findit { 20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5 }, expected 17 res= %d\n", result);
 }
 
+void test_mutual_recurstion(){
+    printf("F(25)[16] = %d\n", F(25));
+    printf("M(25)[16] = %d\n", M(25));
+}
+
 int main(){
     // test_old_katas();
     // test_last_digit();
     // test_recursion();
-    test_find_it();
+    // test_find_it();
+    test_mutual_recurstion();
     return 0;
 }
