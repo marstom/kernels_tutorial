@@ -88,6 +88,8 @@ void test_find_it(){
 }
 
 void test_mutual_recurstion(){
+    printf("F(0) = %d\n", F(0));
+    printf("F(1) = %d\n", F(1));
     printf("F(25)[16] = %d\n", F(25));
     printf("M(25)[16] = %d\n", M(25));
 }
