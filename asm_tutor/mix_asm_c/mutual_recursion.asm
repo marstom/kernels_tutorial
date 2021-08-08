@@ -12,15 +12,17 @@ section .text
 F:
     mov r9, rdi     ; n variable
     cmp r9, 0
-    je .return_zero
+    je .n_is_zero
     jmp .continue
-.return_zero:
-    mov eax, 5
+.n_is_zero:
+    mov eax, 1
     ret
 .continue:
     ;n - m(f(n-1))
+    push rdi
     dec rdi
     call F
+    pop rdi
     call M
     ;n - expr
     ;sub rdi, rax
@@ -31,10 +33,10 @@ F:
 M:
     mov r9, rdi     ; n variable
     cmp r9, 0
-    je .return_zero
+    je .n_is_zero
     jmp .continue
-.return_zero:
-    mov eax, 5
+.n_is_zero:
+    mov eax, 1
     ret
 .continue:
     ;n - f(m(n-1))

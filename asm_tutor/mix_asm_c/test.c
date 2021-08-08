@@ -12,6 +12,8 @@ extern int last_digit(long); // TODO WIP
 extern int64_t recursion_factorial(int64_t n);
 extern int32_t find_it(int32_t* arr, size_t len);
 
+extern char* rot13(char* original);
+
 // defined in mutual_recursion.asm
 extern int32_t F(int32_t n);
 extern int32_t M(int32_t n);
@@ -94,11 +96,16 @@ void test_mutual_recurstion(){
     printf("M(25)[16] = %d\n", M(25));
 }
 
+void test_rot13(){
+    printf("test -> %s\n", rot13("test"));
+}
+
 int main(){
     // test_old_katas();
     // test_last_digit();
     // test_recursion();
     // test_find_it();
-    test_mutual_recurstion();
+    // test_mutual_recurstion();
+    test_rot13();
     return 0;
 }
