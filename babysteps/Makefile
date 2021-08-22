@@ -4,7 +4,7 @@
 all: compile run
 
 compile:
-	nasm $(IN) -f bin -o boot.bin
+	nasm -g $(IN) -f bin -o boot.bin
 
 run:
 	qemu-system-i386 -hda boot.bin

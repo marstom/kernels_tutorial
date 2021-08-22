@@ -1,9 +1,13 @@
+%if 0
+Printing chars using bios interupt
+%endif
+
 ;https://www.youtube.com/watch?v=APiHPkPmwwU
 mov ah, 0x0e ;teletype mode
 
 
 mov al, 'M'
-int 0x10
+int 0x10    ;bios interrupt
 mov al, 'y'
 int 0x10
 mov al, ' '
