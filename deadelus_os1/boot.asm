@@ -22,11 +22,16 @@ mov cl, 0x02
 mov dl, [BOOT_DISK]
 int 0x13                ; no error management, do your homework!
 
-                                    
-mov ah, 0x0
-mov al, 0x3
-int 0x10                ; text mode
+; ; mode text
+; mov ah, 0x0
+; mov al, 0x3
+; int 0x10                ; text mode
 
+
+;mode graphics?
+mov ah, 0x0
+mov al, 0x13
+int 0x10
 
 CODE_SEG equ GDT_code - GDT_start
 DATA_SEG equ GDT_data - GDT_start
