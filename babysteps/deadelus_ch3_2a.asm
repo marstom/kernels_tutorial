@@ -7,6 +7,7 @@ Print text from buffer on hit enter in reversed order
 
 
 systemloop:
+; without org xxx [buffer + 0x7c00]
 mov bx, buffer
 
 mov [bx], byte 0x0a
