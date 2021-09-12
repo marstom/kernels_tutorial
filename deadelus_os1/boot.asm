@@ -24,13 +24,13 @@ int 0x13                ; no error management, do your homework!
 
 ; ; mode text
 ; mov ah, 0x0
-; mov al, 0x3
+; mov al, 0x3             ; text 80*25 16 color
 ; int 0x10                ; text mode
 
-
+;https://wiki.osdev.org/Drawing_In_a_Linear_Framebuffer
 ;mode graphics?
-mov ah, 0x0
-mov al, 0x13
+mov ah, 0x0 ;  set video mode
+mov al, 0x13 ; VGA 320*200 256 color
 int 0x10
 
 CODE_SEG equ GDT_code - GDT_start
