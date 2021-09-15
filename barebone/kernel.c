@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <time.h>
+// #include <time.h>
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -113,10 +113,10 @@ void kernel_main(void)
 	
 	/* Newline support is left as an exercise. */
 	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
-	delayms(1000);
+	// delayms(1000);
 	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
-	delayms(1000);
+	// delayms(1000);
 	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
-	delayms(1000);
+	// delayms(1000);
 	terminal_writestring("Hello, kernel World! fdfdffdfd\n");
 }
