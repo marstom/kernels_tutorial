@@ -37,6 +37,14 @@ mov ah, 0x0			; clear screen (set text mode)
 mov al, 0x3
 int 0x10
 
+; mov bx, 1254
+; call PrintDecimal
+
+; mov bx, OK
+; call PrintString
+
+; call getMemoryMap
+
 ;call GraphicsMode		; uhm, later on
 
 call switchToPM
@@ -63,6 +71,8 @@ GraphicsMode:
 %include "GDT.asm"
 
 %include "EnterPM.asm"
+
+
 
 OK:
 	db 'Ok', 10, 13, 0

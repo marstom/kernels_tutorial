@@ -20,18 +20,29 @@ void putpixel(unsigned char* screen, int pos_x, int pos_y, unsigned char VGA_COL
     *location = VGA_COLOR;
 }
 
+void rainbow_test(){
+    unsigned char *screen = (unsigned char*)0xa8000;
+    for(int c=-160; c<160; c+=1){
+        for(int i=-160; i<160; i+=1){
+            putpixel(screen, c,i,c);
+        }
+    }
+}
+
+/*
+To run uncomment
+;call GraphicsMode in boot.asm
+*/
+void textmode_print_test(){
+	char *video_text_mem = (char*)0xb8000;
+	print(video_text_mem, "Tomek\n Safir\0", 0x0b);
+}
+
 extern "C" void main(){
 	/* asm volatile ("sti"); */
-	char *video_text_mem = (char*)0xb8000;
-	/* unsigned char *screen = (unsigned char*)0xA0000; */
-	print(video_text_mem, "Tomek\n Safir\0", 0x0b);
+    // rainbow_test();
+    textmode_print_test();
 
 
-	/* for(int i=0; i<320; i+=1){ */
-	/*     putpixel(screen, i,i,i); */
-	/* } */
-
-
-	/* *(char*)0xb8000 = 'Q'; */
 	return;
 }
