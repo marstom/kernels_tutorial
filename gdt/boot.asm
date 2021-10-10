@@ -47,13 +47,13 @@ dd: d words 4bytes
 
 
 
-[org 0x7c00]                        
+[org 0x7c00]
+;memory location of C compiled code
 KERNEL_LOCATION equ 0x1000
 
 BOOT_DISK: db 0
 mov [BOOT_DISK], dl        
 
-; missing part
 xor ax, ax                          
 mov es, ax
 mov ds, ax
@@ -61,10 +61,8 @@ mov bp, 0x8000
 mov sp, bp
 
 mov bx, KERNEL_LOCATION	; ES:BX is the location to read from, e.g. 0x0000:0x9000 = 0x00000 + 0x9000 = 0x9000
-mov dh, 50			; read 35 sectors (blank sectors: empty_end)
+mov dh, 50			; read 35 sectors (blank sectors: empty_end.asm)
 
-
-;;boot disk
 
 mov ah, 0x02	 ; BIOS read from disk routine
 mov al, dh  	 ; dh is the number of segments we want to read
@@ -98,7 +96,7 @@ mov cr0, eax ; yay, 32 bit mode!!
 jmp CODE_SEG:init_pm
 jmp $
 
-%include "gdt.asm"
+%include "gdt.inc"
 
 NL:
 	db 10, 13, 0
