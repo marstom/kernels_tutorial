@@ -47,38 +47,43 @@ dd: d words 4bytes
 
 
 
-[org 0x7c00]
-
+[org 0x7c00]                        
 KERNEL_LOCATION equ 0x1000
 
+BOOT_DISK: db 0
 mov [BOOT_DISK], dl        
 
+; missing part
+xor ax, ax                          
+mov es, ax
+mov ds, ax
+mov bp, 0x8000
+mov sp, bp
 
-;setup stack
-xor ax, ax			; clear bits of ax
-mov es, ax			; set es to 0
-mov ds, ax			; set ds to 0
-mov bp, 0x8000 		; stack base
-mov sp, bp			; stack pointer to stack base
-					; A:B = A*d16 + B
 mov bx, KERNEL_LOCATION	; ES:BX is the location to read from, e.g. 0x0000:0x9000 = 0x00000 + 0x9000 = 0x9000
 mov dh, 50			; read 35 sectors (blank sectors: empty_end)
 
-call readDisk
 
+;;boot disk
 
-AFTER_DISK_READ:
+mov ah, 0x02	 ; BIOS read from disk routine
+mov al, dh  	 ; dh is the number of segments we want to read
+mov ch, 0x00	 ; track / cylinder number 0
+mov dh, 0x00	 ; head 0
+mov cl, 0x02	 ; start reading from sector 2 (after boot sector)
+
+mov dl, [BOOT_DISK]
+int 0x13	 ; read from disk interrupt
+
+;;;
 mov bx, NL
 mov bx, NL
-call getMemoryMap
 
 mov ah, 0x0			; clear screen (set text mode)
 mov al, 0x3
 int 0x10
 
-; jmp $
-;;
-; call readDisk
+
 
 
 
@@ -90,28 +95,16 @@ mov eax, cr0
 or eax, 1
 mov cr0, eax ; yay, 32 bit mode!!
 ; far jump (jump to other segment)
-jmp CODE_SEG:start_protected_mode
+jmp CODE_SEG:init_pm
 jmp $
 
-ERROR:
-    mov bx, ERROR_MSG
-    jmp $
-
-%include "ReadFromDisk.asm"
 %include "gdt.asm"
-%include "AvailableMemory.asm"
-
-OK:
-	db 'Ok', 10, 13, 0
 
 NL:
 	db 10, 13, 0
-
-ERROR_MSG:
-	db 10, 13,'Error', 10, 13, 0
-Extended_Memory_Size: db 0, 0
 [bits 32]
-start_protected_mode:
+init_pm:
+
 	mov ax, DATA_SEG
 	mov ds, ax
 	mov ss, ax
@@ -121,25 +114,25 @@ start_protected_mode:
 	
 	mov ebp, 0x90000		; 32 bit stack base pointer
 	mov esp, ebp
-    call begin_pm
-begin_pm:
-    mov bx, [Extended_Memory_Size] ; record memory size in bx
+    call start_pm
+    jmp $
+
+start_pm:
     ; mov al, 'A'
     ; mov ah, 0x0f
     ; mov [0xb8000], ax
     ; mov al, 'B'
     ; mov ah, 0x0f
     ; mov [0xb8000+2], ax
-    ; mov al, 'B'
+    ; mov al, 'C'
     ; mov ah, 0x0f
     ; mov [0xb8000+4], ax
     ; mov al, 'A'
     ; mov ah, 0x0f
-    ; mov [0xb8000+6], ax
-    jmp KERNEL_LOCATION
-    jmp $
+    ; mov [0xb8000+6], ax                      
 
-                                     
+    jmp KERNEL_LOCATION    
+    jmp $         
  
 times 510-($-$$) db 0              
 dw 0xaa55

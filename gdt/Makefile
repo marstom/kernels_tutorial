@@ -6,15 +6,16 @@ all: clean compile run
 compile:
 	nasm -g boot.asm -f bin -o ./bin/boot.bin
 	nasm -g empty_end.asm -f bin -o ./bin/empty_end.bin
-	
+	nasm kernel_entry.asm -f elf -o ./bin/kernel_entry.o
+
 	i686-elf-gcc -ffreestanding -m32 -g -c "kernel.cpp" -o "bin/kernel.o"
-	i686-elf-ld -o "bin/kernel.bin" -Ttext 0x1000 "bin/kernel.o" --oformat binary
+	i686-elf-ld -o "bin/kernel.bin" -Ttext 0x1000 "bin/kernel_entry.o"  "bin/kernel.o" --oformat binary
 	
-	cat ./bin/boot.bin ./bin/kernel.bin  > ./bin/boot.bin 
-	cat ./bin/boot.bin ./bin/empty_end.bin  > tomos.bin
+	cat ./bin/boot.bin ./bin/kernel.bin  > ./bin/short.bin 
+	cat ./bin/short.bin ./bin/empty_end.bin  > tomos.bin
 
 run:
-	qemu-system-i386 -hda tomos.bin
+	qemu-system-i386 -drive format=raw,file=tomos.bin,index=0,if=floppy,  -m 128M
 
 # run in debug mode
 # (gdb) target remote localhost:1234
