@@ -25,15 +25,17 @@ asm_c_function:
     leave
     ret
 
+; TODO - test for this
 my_strlen:
     push ebp
     mov ebp, esp
     push ecx
-
     xor ecx, ecx ; counter
+    xor edx, edx
+
 .loop:
-    mov al, byte [ebp+8]
-    add esp, 16
+    mov edx, [ebp+8]
+    mov eax, [edx+ecx]
     inc ecx
     cmp al, 0
     jne .loop
