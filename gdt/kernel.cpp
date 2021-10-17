@@ -20,9 +20,40 @@ void print(char* video_mem, char* message, char color){
 
 
 
-int new_line(char **video_mem){
+void new_line(char **video_mem){
     *video_mem += 160;
 }
+
+void print_xy(char c, char color, int x, int y){
+    char *video_text_mem = (char*)0xb8000;
+    int pos = x*2 + y*160;
+    video_text_mem[pos+1]=color;
+    video_text_mem[pos]=c;
+}
+
+void clear_screen(){
+    char *video_text_mem = (char*)0xb8000;
+    for(int i=0; i<160; i++){
+        for(int j=0; j<160; j++){
+            print_xy(' ', 0x00, i, j);
+    
+        }
+    }
+}
+
+
+#define SIZE (1 << 4)
+int sierpinsky()
+{
+	int x, y, i;
+	for (y = SIZE - 1; y >= 0; y--, print_xy('\n', 0x0b, x, y)) {
+		for (i = 0; i < y; i++) print_xy(' ', 0x0b, x, y);
+		for (x = 0; x + y < SIZE; x++)
+			print_xy((x & y) ? ' ' : '*', 0x0b, x, y);
+	}
+	return 0;
+}
+
 
 
 extern "C" void main(){
@@ -46,5 +77,8 @@ extern "C" void main(){
     new_line(&video_text_mem);
     memset(buff, 'x', 100);
     print(video_text_mem, buff, 0x0b);
+    print_xy('*', 0x0b, 0, 9);
+    clear_screen();
+    sierpinsky();
 	return;
 }
