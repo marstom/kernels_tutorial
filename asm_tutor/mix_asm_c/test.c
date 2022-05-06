@@ -14,9 +14,11 @@ extern int32_t find_it(int32_t* arr, size_t len);
 
 extern char* rot13(char* original);
 
-// defined in mutual_recursion.asm
+// defined in mutual_recursion.asm ( not solved to delete)
 extern int32_t F(int32_t n);
 extern int32_t M(int32_t n);
+
+extern char* alphabet_position(char* sentence);
 
 void test_old_katas(){
     hello();
@@ -100,12 +102,17 @@ void test_rot13(){
     printf("test -> %s\n", rot13("test"));
 }
 
+void test_alphabet_position(){
+printf("%s\n", alphabet_position("The sunset sets at twelve o' clock.\0"));
+}
+
 int main(){
     // test_old_katas();
     // test_last_digit();
     // test_recursion();
     // test_find_it();
     // test_mutual_recurstion();
-    test_rot13();
+    // test_rot13();
+    test_alphabet_position();
     return 0;
 }
