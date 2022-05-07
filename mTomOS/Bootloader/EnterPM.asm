@@ -1,14 +1,14 @@
 [bits 16]
 
 switchToPM:
-	cli				; turn off interrupts
-	lgdt [GDT_descriptor]		; Load GDT
+	cli                         ; turn off interrupts
+	lgdt [GDT_descriptor]       ; Load GDT
 	
 	mov eax, cr0
-	or eax, 0x1			; sets the first bit of eax to 1, while leaving the rest intact
+	or eax, 0x1          ; sets the first bit of eax to 1, while leaving the rest intact
 	mov cr0, eax
 	
-	jmp CODE_SEG:init_pm		; far jump to code segment, flushes CPU cache, removing real mode instructions
+	jmp CODE_SEG:init_pm ; far jump to code segment, flushes CPU cache, removing real mode instructions
 
 [bits 32]
 
