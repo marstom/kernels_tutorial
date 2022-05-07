@@ -28,7 +28,8 @@ extern "C" void load_idt(unsigned long *idt_ptr);
 /* current cursor location */
 unsigned int current_loc = 0;
 /* video memory begins at address 0xb8000 */
-char *vidptr = (char*)0xb8000;
+char *video_text_mem = (char*)0xb8000;
+
 
 struct IDT_entry {
 	unsigned short int offset_lowerbits;
@@ -100,12 +101,12 @@ void kb_init(void)
 	write_port(0x21 , 0xFD);
 }
 
-void kprint(const char *str)
+void kprint(const char *str, const char color)
 {
 	unsigned int i = 0;
 	while (str[i] != '\0') {
-		vidptr[current_loc++] = str[i++];
-		vidptr[current_loc++] = 0x07;
+		video_text_mem[current_loc++] = str[i++];
+		video_text_mem[current_loc++] = color;
 	}
 }
 
@@ -119,8 +120,8 @@ void clear_screen(void)
 {
 	unsigned int i = 0;
 	while (i < SCREENSIZE) {
-		vidptr[i++] = ' ';
-		vidptr[i++] = 0x07;
+		video_text_mem[i++] = ' ';
+		video_text_mem[i++] = 0x07;
 	}
 }
 
@@ -128,27 +129,10 @@ void clear_screen(void)
 
 
 
-
-
-
-
-
-
-
-void print(char* video_mem, char* message, char color){
-    int i=0;
-    int j=0;
-    while(1){
-        video_mem[j+1] = color;
-        video_mem[j] = message[i];
-        j+=2;
-        i+=1;
-        if(message[i] == '\0')
-            break;
-    }
+void kprintln(const char* message, char color){
+    kprint(message, color);
+    kprint_newline();
 }
-
-
 void putpixel(unsigned char* screen, int pos_x, int pos_y, unsigned char VGA_COLOR)
 {
     unsigned char* location = screen + 320 * pos_y + pos_x;
@@ -169,20 +153,26 @@ To run uncomment
 ;call GraphicsMode in boot.asm
 */
 void textmode_print_test(){
-	char *video_text_mem = (char*)0xb8000;
-	print(video_text_mem, "Tomek\n Safir\0", 0x0b);
+    kprintln("*************************************", 0x0b);
+    kprintln("*                                   *", 0x0b);
+    kprintln("*      My very first kernel!        *", 0x0b);
+    kprintln("*                                   *", 0x0b);
+    kprintln("*************************************", 0x0b);
+    kprint_newline();
+    kprint("prompt>", 0x0c);
 }
 
 extern "C" void main(){
     unsigned char status;
 	/* asm volatile ("sti"); */
     // rainbow_test();
-    textmode_print_test();
+    // clear_screen();
     // status = read_port(0x64);
-    kprint("To jest kprint");
+    // kprint("To jest kprint");
     idt_init();
     kb_init();
 
+    textmode_print_test();
 
 	return;
 }
@@ -206,8 +196,8 @@ extern "C" void keyboard_handler_main(void){
 			kprint_newline();
 			return;
 		}
-
-		vidptr[current_loc++] = keyboard_map[(unsigned char) keycode];
-		vidptr[current_loc++] = 0x07;
+        
+		video_text_mem[current_loc++] = keyboard_map[(unsigned char) keycode];
+		video_text_mem[current_loc++] = 0x0b;
 	}
 }
