@@ -3,11 +3,11 @@ all: compile concat run
 compile:
 	nasm "Bootloader/boot.asm" -f bin -o "WeeBins/boot.bin" -i Bootloader
 	nasm "Kernel/empty_end.asm" -f bin -o "WeeBins/empty_end.bin"
-	nasm "Kernel/utils.asm" -f elf -o "WeeBins/utils.o"
+	nasm "Kernel/keyboard.asm" -f elf -o "WeeBins/keyboard.o"
 
 	i686-elf-gcc -ffreestanding -m32 -g -c "Kernel/kernel.cpp" -o "WeeBins/kernel.o" -I Kernel
 	nasm "Kernel/kernel_entry.asm" -f elf -o "WeeBins/kernel_entry.o" -i Kernel
-	i686-elf-ld -o "WeeBins/kernel.bin" -Ttext 0x1000 "WeeBins/kernel_entry.o" "WeeBins/kernel.o" "WeeBins/utils.o" --oformat binary
+	i686-elf-ld -o "WeeBins/kernel.bin" -Ttext 0x1000 "WeeBins/kernel_entry.o" "WeeBins/kernel.o" "WeeBins/keyboard.o" --oformat binary
 
 
 

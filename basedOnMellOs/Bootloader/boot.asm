@@ -43,7 +43,7 @@ int 0x10
 ; mov bx, OK
 ; call PrintString
 
-; call getMemoryMap
+call getMemoryMap ; print on scree avalable memory
 
 ;call GraphicsMode		; uhm, later on
 

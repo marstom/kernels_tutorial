@@ -18,13 +18,6 @@ extern "C" char read_port(unsigned short port);
 extern "C" void write_port(unsigned short port, unsigned char data);
 extern "C" void load_idt(unsigned long *idt_ptr);
 
-
-
-
-
-
-
-
 /* current cursor location */
 unsigned int current_loc = 0;
 /* video memory begins at address 0xb8000 */
@@ -125,34 +118,12 @@ void clear_screen(void)
 	}
 }
 
-
-
-
-
 void kprintln(const char* message, char color){
     kprint(message, color);
     kprint_newline();
 }
-void putpixel(unsigned char* screen, int pos_x, int pos_y, unsigned char VGA_COLOR)
-{
-    unsigned char* location = screen + 320 * pos_y + pos_x;
-    *location = VGA_COLOR;
-}
 
-void rainbow_test(){
-    unsigned char *screen = (unsigned char*)0xa8000;
-    for(int c=-160; c<160; c+=1){
-        for(int i=-160; i<160; i+=1){
-            putpixel(screen, c,i,c);
-        }
-    }
-}
-
-/*
-To run uncomment
-;call GraphicsMode in boot.asm
-*/
-void textmode_print_test(){
+void textmode_print_welcome_screen(){
     kprintln("*************************************", 0x0b);
     kprintln("*                                   *", 0x0b);
     kprintln("*      My very first kernel!        *", 0x0b);
@@ -163,21 +134,25 @@ void textmode_print_test(){
 }
 
 extern "C" void main(){
-    unsigned char status;
-	/* asm volatile ("sti"); */
-    // rainbow_test();
-    // clear_screen();
-    // status = read_port(0x64);
-    // kprint("To jest kprint");
-    idt_init();
-    kb_init();
+	// asm volatile ("sti");
+    idt_init(); // interrupt descriptor table initialize
+    kb_init(); // keyboard initialize
 
-    textmode_print_test();
+    textmode_print_welcome_screen();
+
+    /*
+    To run graphics mode uncomment in boot.asm this line
+    and can draw by writing directly in graphics memory
+    (need design my own fonts)
+    call GraphicsMode
+    */
 
 	return;
 }
 
-
+/*
+Interrupt from keyboard handler
+*/
 extern "C" void keyboard_handler_main(void){
 	unsigned char status;
 	char keycode;
